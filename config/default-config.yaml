@@ -1,0 +1,128 @@
+regions:
+  - us-east-2
+  - global # for resources not bound to a specific region, such as Route53 zones for example
+account-blacklist:
+  - "405696771294" # master-hopper
+  - "391875474311" # master-lamarr
+  - "162385366210" # Gold finger
+  - "287524979200" # Shared 
+
+accounts:
+  000000000000:
+    presets:
+      - base-setup
+      - other-setup
+presets:
+  base-setup:
+    filters:
+      EC2VPC:
+        - type: "contains"
+          value: "vpc-"
+      IAMPolicy:
+        - type: "contains"
+          value: "aws-controltower"
+        - type: "contains"
+          value: "AWSReservedSSO"
+      IAMInstanceProfile:
+        - type: "contains"
+          value: "allow-assume"
+      IAMInstanceProfileRole:
+        - type: "contains"
+          value: "allow-assume"
+      IAMRolePolicyAttachment:
+        # Do not remove the policy from the principal user role
+        - "AWSControlTowerExecution -> AdministratorAccess"
+        - "aws-controltower* -> *"
+        - "AWSReservedSSO* -> *"
+        - "aws-codestar-service-role -> AWSCodeStarServiceRole"
+        - "lamarr-master-admin-access -> AdministratorAccess"
+        - property: RoleName
+          value: "aws-controltower"
+        - property: RoleName
+          value: "AWSReservedSSO*"
+        - type: "contains"
+          value: "AWSReservedSSO"
+        - type: "contains"
+          value: "aws-controltower"
+        - type: "contains"
+          value: "allow-assume"
+      IAMRole:
+        - type: "contains"
+          value: "aws-controltower"
+        - type: "contains"
+          value: "AWSReservedSSO"
+        - type: "contains"
+          value: "AWSControlTowerExecution"
+        - type: "contains"
+          value: "allow-assume"
+        - type: "contains"
+          value: "lamarr-master-admin-access"  
+      IAMRolePolicy:
+        - type: "contains"
+          value: "aws-controltower"
+        - "AWSControlTowerExecution -> AdministratorAccess"
+      CloudTrailTrail:
+        - aws-controltower-BaselineCloudTrail
+      ConfigServiceDeliveryChannel:
+        - aws-controltower-BaselineConfigDeliveryChannel
+      ConfigServiceConfigurationRecorder:
+        - type: "contains"
+          value: "aws-controltower"
+      CloudWatchLogsLogGroup:
+        - type: "contains"
+          value: "aws-controltower"
+      CloudFormationStack:
+        - type: "contains"
+          value: "StackSet-AWSControlTowerBP"
+      CloudWatchEventsRule:
+        - type: "contains"
+          value: "aws-controltower"
+      CloudWatchEventsTarget:
+        - type: "contains"
+          value: "aws-controltower"
+      SNSTopic:
+        - type: "contains"
+          value: "aws-controltower"
+      SNSSubscription:
+        - type: "contains"
+          value: "aws-controltower"
+      IAMSAMLProvider:
+        - type: "contains"
+          value: "DO_NOT_DELETE"
+      EC2KeyPair:
+        - DemoKey
+        - Student1KP-OH
+        - student2KP-OH
+      LambdaFunction:
+        - type: "contains"
+          value: "aws-controltower"
+      OpsWorksUserProfile:
+        - type: "contains"
+          value: "AWSReservedSSO"
+      EC2SecurityGroup:
+        - type: "contains"
+          value: "default"
+        - type: "contains"
+          value: "sg-"
+      EC2Subnet:
+        - type: "contains"
+          value: "subnet-"
+      EC2InternetGatewayAttachment:
+        - type: "contains"
+          value: "igw-"
+      EC2RouteTable:
+        - type: "contains"
+          value: "rtb-"
+      EC2InternetGateway:
+        - type: "contains"
+          value: "igw-"
+      EC2DHCPOption:
+        - type: "contains"
+          value: "dopt-"
+  other-setup:
+    filters:
+      DynamoDBTable:
+        - lamarr-db
+      S3Bucket:
+        - type: glob
+          value: lamarr-*

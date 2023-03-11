@@ -1,0 +1,13 @@
+# Ignore 
+.DS_Store
+
+config/*.yaml
+
+logs/*.json
+logs/*.log
+
+logs/accounts.txt
+
+# Except 
+!config/default-config.yaml
+!logs/empty.txt
